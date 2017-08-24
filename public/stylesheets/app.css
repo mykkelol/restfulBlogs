@@ -1,0 +1,16 @@
+#create-containerWidth {
+    width: 700px;
+}
+
+#show-containerWidth {
+    width: 700px;
+}
+
+#btnAlign {
+    display: inline;
+}
+
+#showImage {
+    max-height: 20em;
+    height: 100%;
+}

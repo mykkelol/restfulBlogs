@@ -1,1 +1,22 @@
-<h1>this is the new form page</h1>
+<% include ./partials/header.ejs %>
+
+    <div id="create-containerWidth" class="ui main container segment">
+        <div class="ui huge header">New Blog</div>
+        <form class="ui form" action="/blogs" method="POST">
+            <div class="field">
+                <label>Title</label>
+                <input placeholder="title" name="blog[title]">
+            </div>
+            <div class="field">
+                <label>Image</label>
+                <input placeholder="image" name="blog[image]">
+            </div>
+            <div class="field">
+                <label>Content</label>
+                <textarea name="blog[body]"></textarea>
+            </div>
+            <button class="ui large violet button">Submit</button>
+        </form>
+    </div>
+
+<% include ./partials/footer.ejs %>
