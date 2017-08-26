@@ -1,6 +1,9 @@
 var bodyParser      = require("body-parser"),
 express             = require("express"),
 mongoose            = require("mongoose"),
+passport            = require("passport"),
+LocalStrategy       = require("passport-local"),
+User                = require("./models/user"),
 expressSanitizer    = require("express-sanitizer"),
 methodOverride      = require("method-override"),
 app                 = express();
@@ -14,21 +17,34 @@ app.use(methodOverride("_method"));
 app.use(expressSanitizer()); // midware against XSS risks
 app.set("view engine", "ejs");
 
+// PASSPORT CONFIG
+    app.use(require("express-session")({
+        secret: "change-world",
+        resave: false,
+        saveUninitialized: false
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    passport.use(new LocalStrategy(User.authenticate()));
+    passport.serializeUser(User.serializeUser());
+    passport.deserializeUser(User.deserializeUser());
+    
+    // middleware for passing values of logged in users
+    app.use(function(req, res, next){
+        res.locals.currentUser = req.user;
+        next();
+    });
+
 // MODEL CONFIG
-var blogSchema = new mongoose.Schema({
-    title: String,
-    image: String,
-    body: String,
-    created: {type: Date, default: Date.now}
-})
+    var blogSchema = new mongoose.Schema({
+        title: String,
+        image: String,
+        body: String,
+        created: {type: Date, default: Date.now}
+    })
 
-var Blog = mongoose.model('Blog', blogSchema);
+    var Blog = mongoose.model('Blog', blogSchema);
 
-// Blog.create({
-//     title: "CHANGE WORLD",
-//     image: "https://unsplash.com/?photo=_hpk_92Crhs",
-//     body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-// })
 
 // RESTful ROUTING
     // ROOT ROUTE
@@ -42,13 +58,13 @@ var Blog = mongoose.model('Blog', blogSchema);
            if (err){
                console.log(err);
            } else {
-               res.render('index', {blogs:blogs});
+               res.render('index', {blogs:blogs, currentUser: req.user});
            }
         });
     });
     
     // NEW ROUTE - show create form
-    app.get('/blogs/new', function(req, res){
+    app.get('/blogs/new', isLoggedIn, function(req, res){
         res.render('new');
     });
     
@@ -75,7 +91,70 @@ var Blog = mongoose.model('Blog', blogSchema);
             }
         });
     });
+    
+    // EDIT ROUTE - show edit form
+    app.get('/blogs/:id/edit', isLoggedIn, function(req, res){
+        Blog.findById(req.params.id, function(err, foundBlog){
+            if (err){
+                console.log(err);
+            } else {
+                res.render('edit', {blog:foundBlog});   
+            }
+        });
+    });
+    
+    // UPDATE ROUTE
+        // could use post instead of put, but put has semantics
+    app.put('/blogs/:id', function(req, res){
+        req.body.blog.body = req.sanitize(req.body.blog.body);
+        Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, foundBlog){
+            // (id of blog to update, data to update, callback)
+            if (err){
+                console.log(err);
+            } else {
+                res.redirect("/blogs/" + req.params.id);
+            }
+        });
+    });
+    
+    // DELETE ROUTE
+    app.delete('/blogs/:id', isLoggedIn, function(req, res){
+        Blog.findByIdAndRemove(req.params.id, function(err, foundblog){
+            if (err){
+                console.log(err);
+            } else {
+                res.redirect("/blogs");
+            }
+        });
+    });
 
+
+// AUTH ROUTING
+    // login form
+    app.get("/admin-login", function(req,res){
+        res.render("login");
+    });
+    // handling login
+    app.post("/admin-login", passport.authenticate("local", 
+        {
+            successRedirect: "/blogs",
+            failureRedirect: "/admin-login"
+        }), function(req, res){
+            // app.post(post page, middleware, callback)
+            
+    });
+    // LOGOUT ROUTE
+    app.get("/logout", function(req, res){
+        req.logout();
+        res.redirect("/blogs");
+    })
+    
+function isLoggedIn(req, res, next){
+    if (req.isAuthenticated()){
+        return next();
+    }
+    res.send("You must be an admin");
+}
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server is running!");
