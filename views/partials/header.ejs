@@ -3,20 +3,28 @@
     <head>
         <title>Micheal's Blog</title>
         <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css'>
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
         <link rel="stylesheet" href="/stylesheets/app.css">
     </head>
     <body>
-        <div class="ui inverted menu">
+        
+        <div class="ui stackable fixed fluid borderless menu">
             <div class="ui container">
-                <div class='header item'><a href="/"><i class='code icon'></i>MICHEAL SIHAVONG</a></div>
+                <a href="/" class="header item brandLink">
+                    <div class="content brand">MICHEAL SIHAVONG
+                        <div class="subheader tagline">ASPIRING CONSULTANT / PM</div>
+                    </div>
+                </a>
+                <div class="right menu">
                     <% if(currentUser){ %>
-                        <a href='/' class='item'>Home</a>
-                        <div class='item'>Welcome back, <%= currentUser.username %></div>
-                        <a href='/blogs/new' class='item'>Create New Blog</a>
-                        <a href='/logout' class='item'>Logout</a>
+                        <a href='/blogs' class='item item-menu'>HOME</a>
+                        <a href='/blogs/new' class='item item-menu'>CREATE A NEW BLOG</a>
+                        <a href='/logout' class='item item-menu'>LOGOUT</a>
+                        <div class='item'>Welcome back, <%= currentUser.username %>!</div>
                     <% } else { %>
-                        <a href='/' class='item'>Home</a>
+                        <a href='/blogs' class='item item-menu'>HOME</a>
+                        <a href='https://mykkelol.github.io/' class='item item-last-menu'>BACK TO PORTFOLIO</a>
                     <% } %>
+                </div>
             </div>
         </div>

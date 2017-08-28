@@ -1,8 +1,43 @@
+.fix-menu-margin {
+   margin-top: 100px;
+   margin-bottom: 30px;
+}
+
+.item-menu, .item-last-menu {
+    font-size: 120% !important;
+}
+
+.item-last-menu {
+    margin-right: 50px;
+}
+
+.item-menu:hover, .item-last-menu:hover {
+    font-weight: 700 !important;
+}
+
+.brand {
+    font-weight: 700;
+    font-size: 30px !important;
+    color: black;
+}
+
+.brandLink:hover {
+    background-color: #fff !important;
+}
+
+.tagline {
+    font-weight: 400;
+    font-size: 14px !important;
+    letter-spacing: 4.5px;
+    color: black;
+}
+
 #create-containerWidth {
     width: 700px;
 }
 
 #show-containerWidth {
+    margin-top: 100px;
     width: 700px;
 }
 
