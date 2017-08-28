@@ -131,11 +131,30 @@ app.set("view engine", "ejs");
 
 
 // AUTH ROUTING
-    // login form
+    // REGISTER FORM
+    app.get("/register", function(req, res){
+        res.render("register"); 
+    });
+    
+    // HANDLING REGISTER
+    app.post("/register", function(req, res){
+        var newUser = new User({username: req.body.username});
+        User.register(newUser, req.body.password, function(err, user){
+            if (err){
+                console.log(err);
+            }
+            passport.authenticate("local")(req, res, function(){
+                res.redirect("/blogs"); 
+            });
+        });
+    });
+
+
+    // LOGIN FORM
     app.get("/admin-login", function(req,res){
         res.render("login");
     });
-    // handling login
+    // HANDLING LOGIN
     app.post("/admin-login", passport.authenticate("local", 
         {
             successRedirect: "/blogs",
