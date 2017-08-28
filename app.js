@@ -10,7 +10,7 @@ app                 = express();
 
 // APP CONFIG
 // mongoose.connect("mongodb://localhost/personal_blog", {useMongoClient:true});
-mongoose.connect("mongodb://mykke:change-world@ds161713.mlab.com:61713/mykke-blog", {useMongoClient:true});
+mongoose.connect("mongodb://mykke:changeworld@ds161713.mlab.com:61713/mykke-blog", {useMongoClient:true});
 mongoose.Promise = global.Promise;
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public")); // midware for CSS/JS
@@ -144,7 +144,7 @@ app.set("view engine", "ejs");
                 console.log(err);
             }
             passport.authenticate("local")(req, res, function(){
-                res.redirect("/blogs"); 
+                res.redirect("/blogs");
             });
         });
     });
