@@ -1,6 +1,6 @@
 .fix-menu-margin {
-   margin-top: 100px;
-   margin-bottom: 30px;
+    margin-top: 100px;
+    margin-bottom: 30px;
 }
 
 .item-menu, .item-last-menu {
@@ -32,11 +32,7 @@
     color: black;
 }
 
-#create-containerWidth {
-    width: 700px;
-}
-
-#show-containerWidth {
+#containerWidth {
     margin-top: 100px;
     width: 700px;
 }

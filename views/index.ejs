@@ -5,14 +5,14 @@
         <div class="ui divided items">
             <% blogs.forEach(function(blog){ %>
             <div class="item">
-                <a class="image" href="/blogs/<%= blog._id %>"><img src="<%= blog.image %>"></a>
+                <a class="ui medium image" href="/blogs/<%= blog._id %>"><img src="<%= blog.image %>"></a>
                 <div class="content">
                     <a class="header" href="/blogs/<%= blog._id %>"><%= blog.title %></a>
                     <div class="meta">
                         <span class="cinema"><%= blog.created.toDateString() %></span>
                     </div>
                     <div class="description">
-                        <p><%- blog.body.substring(0, 375) %>...</p>
+                        <p><%- blog.body.substring(0, 300) %>...</p>
                     </div>
                     <div class="extra">
                         <a class="ui floated black button" href="/blogs/<%= blog._id %>">
