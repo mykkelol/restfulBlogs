@@ -1,6 +1,5 @@
 .fix-menu-margin {
-    margin-top: 100px;
-    margin-bottom: 30px;
+    margin-top: 10% !important;
 }
 
 .item-menu, .item-last-menu {
@@ -44,4 +43,18 @@
 #showImage {
     max-height: 20em;
     height: 100%;
+}
+
+.image-fixed {
+    background-size: cover;
+}
+
+@media screen and (max-width: 767px) {
+    .fix-menu-margin {
+        margin-top: 40% !important;
+    }
+}
+
+.quote-author {
+    text-align: right;
 }

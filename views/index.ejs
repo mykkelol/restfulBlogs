@@ -1,28 +1,53 @@
 <% include ./partials/header.ejs %>
 
-<div class="ui main text container fix-menu-margin">
-    <div class="ui top attached segment">
-        <div class="ui divided items">
-            <% blogs.forEach(function(blog){ %>
-            <div class="item">
-                <a class="ui medium image" href="/blogs/<%= blog._id %>"><img src="<%= blog.image %>"></a>
-                <div class="content">
-                    <a class="header" href="/blogs/<%= blog._id %>"><%= blog.title %></a>
-                    <div class="meta">
-                        <span class="cinema"><%= blog.created.toDateString() %></span>
-                    </div>
-                    <div class="description">
-                        <p><%- blog.body.substring(0, 300) %>...</p>
-                    </div>
-                    <div class="extra">
-                        <a class="ui floated black button" href="/blogs/<%= blog._id %>">
-                            Read More
-                            <i class="right chevron icon"></i>
-                        </a>
+<div class="ui centered grid container fix-menu-margin">
+    <div class="four wide computer twelve wide tablet column main text">
+        <div class="ui top attached segment">
+            <div>
+                <h3>
+                I hear and I forget.<br>
+                I see and I remember.<br>
+                I do and I understand.<br>
+                <span class="quote-author">- Confucius</span><br><br>
+                </h3>
+            </div>
+            <div>
+                <p>
+                    Hello! Welcome to my blog. I realized throughout college that one of my weakness is writing.
+                    I hope to improve my writing through blogging! If you somehow manage to decipher my style of writing,
+                    I applaud you!
+                </p>
+                <p>
+                    All the best to you,<br>
+                    Micheal
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="twelve wide computer twelve wide tablet column main text">
+        <div class="ui top attached segment">
+            <div class="ui divided items">
+                <% blogs.forEach(function(blog){ %>
+                <div class="item">
+                    <a class="ui medium image fluid image-fixed" href="/blogs/<%= blog._id %>"><img src="<%= blog.image %>"></a>
+                    <div class="content">
+                        <a class="header" href="/blogs/<%= blog._id %>"><%= blog.title %></a>
+                        <div class="meta">
+                            <span class="cinema"><%= blog.created.toDateString() %></span>
+                        </div>
+                        <div class="description">
+                            <p><%- blog.body.substring(0, 100) %>...</p>
+                        </div>
+                        <div class="extra">
+                            <a class="ui floated black button" href="/blogs/<%= blog._id %>">
+                                Read More
+                                <i class="right chevron icon"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <% }); %>
             </div>
-            <% }); %>
         </div>
     </div>
 </div>
