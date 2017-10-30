@@ -1,5 +1,5 @@
 .fix-menu-margin {
-    margin-top: 10% !important;
+    margin-top: 3% !important;
 }
 
 .item-menu, .item-last-menu {
@@ -57,4 +57,9 @@
 
 .quote-author {
     text-align: right;
+}
+
+.announcer {
+    font-weight: bold;
+    color: red;
 }
